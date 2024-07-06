@@ -15,10 +15,10 @@ import java.util.Objects;
 public class TransferenciaService {
 
     @Autowired
-    private RepositoryContaBancaria repContaBancaria;
+    RepositoryContaBancaria repContaBancaria;
 
     @Autowired
-    private RepositoryTransferencia repTransferencia;
+    RepositoryTransferencia repTransferencia;
 
 
         public void realizarTransferencia(Long idEmitente, Long idContaRecebimento, BigDecimal valor) throws ValidationException, FileNotFoundException {

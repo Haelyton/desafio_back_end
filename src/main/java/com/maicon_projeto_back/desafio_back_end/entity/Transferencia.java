@@ -17,12 +17,14 @@ public class Transferencia {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "contaEmitente")
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "contaEmitente")
     private ContaBancaria contaEmitente;
 
-    @Column(name = "contaRecebimento")
+    @JoinColumn(name = "contaRecebimento")
     private ContaBancaria contaRecebimento;
 
-    @Column(name = "BigDecimal")
+    @JoinColumn(name = "BigDecimal")
     private BigDecimal valor = BigDecimal.ZERO;
 }

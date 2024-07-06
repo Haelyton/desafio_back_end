@@ -2,9 +2,11 @@ package com.maicon_projeto_back.desafio_back_end.Services;
 
 import com.maicon_projeto_back.desafio_back_end.entity.ContaBancaria;
 import com.maicon_projeto_back.desafio_back_end.repository.RepositoryContaBancaria;
-import jakarta.xml.bind.ValidationException;
+import jakarta.validation.ValidationException;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
@@ -18,6 +20,7 @@ public class ContaBancariaService {
     @Autowired
     RepositoryContaBancaria repContaBancaria;
 
+    @SneakyThrows
     public void createContaBancaria(ContaBancaria conta) {
 
         try {
@@ -27,12 +30,13 @@ public class ContaBancariaService {
 
             repContaBancaria.saveAndFlush(conta);
         } catch (ValidationException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ValidationException(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    @SneakyThrows
     public void updateContaBancaria(ContaBancaria conta) {
         try {
             ContaBancaria contaOld = repContaBancaria.getOne(conta.getId());
@@ -46,7 +50,7 @@ public class ContaBancariaService {
 
             repContaBancaria.saveAndFlush(contaOld);
         } catch (FileNotFoundException e){
-            throw new RuntimeException(e.getMessage());
+            throw new ValidationException(e.getMessage());
         } catch (Exception e){
             e.printStackTrace();
         }

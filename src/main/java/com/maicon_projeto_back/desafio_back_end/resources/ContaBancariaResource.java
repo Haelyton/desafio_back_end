@@ -14,14 +14,9 @@ public class ContaBancariaResource {
     private ContaBancariaService contaBancariaService;
 
     @PostMapping()
-    public String createContaBancaria(ContaBancaria conta) {
-
-        try {
-            contaBancariaService.createContaBancaria(conta);
-            return "Conta Bancária criada com sucesso!";
-        }catch (Exception e){
-            return e.getMessage();
-        }
+    public Response createContaBancaria(ContaBancaria conta) {
+        contaBancariaService.createContaBancaria(conta);
+        return Response.status(Response.Status.CREATED).build();
 
     }
 
