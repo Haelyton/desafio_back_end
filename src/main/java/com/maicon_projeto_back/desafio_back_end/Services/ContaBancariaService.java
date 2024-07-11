@@ -3,26 +3,25 @@ package com.maicon_projeto_back.desafio_back_end.Services;
 import com.maicon_projeto_back.desafio_back_end.entity.ContaBancaria;
 import com.maicon_projeto_back.desafio_back_end.repository.RepositoryContaBancaria;
 import jakarta.validation.ValidationException;
+import jakarta.ws.rs.NotFoundException;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
-@Service
 
+@Service
 public class ContaBancariaService {
 
     @Autowired
     RepositoryContaBancaria repContaBancaria;
 
-    @SneakyThrows
-    public void createContaBancaria(ContaBancaria conta) {
 
+    public void createContaBancaria(ContaBancaria conta) {
         try {
             if (conta.getData().getYear() < LocalDate.now().getYear()) {
                 throw new ValidationException("Deve ser maior de 18 anos.");
@@ -36,22 +35,21 @@ public class ContaBancariaService {
         }
     }
 
-    @SneakyThrows
     public void updateContaBancaria(ContaBancaria conta) {
         try {
             ContaBancaria contaOld = repContaBancaria.getOne(conta.getId());
 
             if (Objects.isNull(contaOld)) {
-                throw new FileNotFoundException("Conta bancária inexistente");
+                throw new NotFoundException("Conta bancária inexistente");
             }
 
             contaOld.setNome(conta.getNome());
             contaOld.setSaldo(conta.getSaldo());
 
             repContaBancaria.saveAndFlush(contaOld);
-        } catch (FileNotFoundException e){
-            throw new ValidationException(e.getMessage());
-        } catch (Exception e){
+        } catch (NotFoundException e) {
+            throw new NotFoundException(e.getMessage());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -64,14 +62,14 @@ public class ContaBancariaService {
             ContaBancaria conta = repContaBancaria.getOne(id);
 
             if (Objects.isNull(conta)) {
-                throw new FileNotFoundException("Conta inexistente");
+                throw new NotFoundException("Conta inexistente");
 
             }
 
             conta.setSenha(null);
             return conta;
 
-        } catch (FileNotFoundException e) {
+        } catch (NotFoundException e) {
             throw new RuntimeException(e.getMessage());
         }
     }

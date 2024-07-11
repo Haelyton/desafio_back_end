@@ -22,8 +22,10 @@ public class Transferencia {
     @JoinColumn(name = "contaEmitente")
     private ContaBancaria contaEmitente;
 
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contaRecebimento")
     private ContaBancaria contaRecebimento;
+
 
     @JoinColumn(name = "BigDecimal")
     private BigDecimal valor = BigDecimal.ZERO;

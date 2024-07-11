@@ -4,10 +4,13 @@ import com.maicon_projeto_back.desafio_back_end.entity.ContaBancaria;
 import com.maicon_projeto_back.desafio_back_end.entity.Transferencia;
 import com.maicon_projeto_back.desafio_back_end.repository.RepositoryContaBancaria;
 import com.maicon_projeto_back.desafio_back_end.repository.RepositoryTransferencia;
+import jakarta.ws.rs.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.ValidationException;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.xml.bind.ValidationException;
-import java.io.FileNotFoundException;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -17,11 +20,12 @@ public class TransferenciaService {
     @Autowired
     RepositoryContaBancaria repContaBancaria;
 
+
     @Autowired
     RepositoryTransferencia repTransferencia;
 
 
-        public void realizarTransferencia(Long idEmitente, Long idContaRecebimento, BigDecimal valor) throws ValidationException, FileNotFoundException {
+        public void realizarTransferencia(Long idEmitente, Long idContaRecebimento, BigDecimal valor){
 
             //Verifica se o valor para transferência é maior que zero
             if (Objects.isNull(valor) || valor.compareTo(BigDecimal.ZERO) <= 0) {
@@ -33,14 +37,14 @@ public class TransferenciaService {
             //Verificar se a conta é uma conta Existente
             ContaBancaria contaEmitente = repContaBancaria.getOne(idEmitente);
             if (Objects.isNull(contaEmitente)) {
-                throw new FileNotFoundException("Conta inexistente");
+                throw new NotFoundException("Conta inexistente");
 
             }
 
             //Verificar se a conta de recebimento é existente
             ContaBancaria contaRecebimento = repContaBancaria.getOne(idContaRecebimento);
             if (Objects.isNull(contaRecebimento)) {
-                throw new FileNotFoundException("Conta de recebimento inexistente");
+                throw new NotFoundException("Conta de recebimento inexistente");
 
             }
 
@@ -64,6 +68,7 @@ public class TransferenciaService {
             transferencia.setContaEmitente(contaEmitente);
             transferencia.setContaRecebimento(contaRecebimento);
             transferencia.setValor(valor);
+
 
             repTransferencia.saveAndFlush(transferencia);
 

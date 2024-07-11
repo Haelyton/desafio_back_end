@@ -2,8 +2,6 @@ package com.maicon_projeto_back.desafio_back_end.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
-import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
