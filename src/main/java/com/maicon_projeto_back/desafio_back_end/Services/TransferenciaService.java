@@ -7,8 +7,6 @@ import com.maicon_projeto_back.desafio_back_end.repository.RepositoryTransferenc
 import jakarta.ws.rs.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.validation.ValidationException;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
 
 
 import java.math.BigDecimal;
