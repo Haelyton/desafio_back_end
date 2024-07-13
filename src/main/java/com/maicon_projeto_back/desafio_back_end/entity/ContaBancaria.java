@@ -37,6 +37,5 @@ public class ContaBancaria {
     @Column(name = "saldo")
     private BigDecimal saldo = BigDecimal.ZERO;
 
-    
-    
+
 }
