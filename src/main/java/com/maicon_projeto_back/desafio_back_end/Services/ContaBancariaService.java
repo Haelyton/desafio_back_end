@@ -4,7 +4,6 @@ import com.maicon_projeto_back.desafio_back_end.entity.ContaBancaria;
 import com.maicon_projeto_back.desafio_back_end.repository.RepositoryContaBancaria;
 import jakarta.validation.ValidationException;
 import jakarta.ws.rs.NotFoundException;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +17,7 @@ import java.util.Objects;
 public class ContaBancariaService {
 
     @Autowired
-    RepositoryContaBancaria repContaBancaria;
-
+    RepositoryContaBancaria repository;
 
     public void createContaBancaria(ContaBancaria conta) {
         try {
@@ -27,7 +25,7 @@ public class ContaBancariaService {
                 throw new ValidationException("Deve ser maior de 18 anos.");
             }
 
-            repContaBancaria.saveAndFlush(conta);
+            repository.saveAndFlush(conta);
         } catch (ValidationException e) {
             throw new ValidationException(e.getMessage());
         } catch (Exception e) {
@@ -37,7 +35,7 @@ public class ContaBancariaService {
 
     public void updateContaBancaria(ContaBancaria conta) {
         try {
-            ContaBancaria contaOld = repContaBancaria.getOne(conta.getId());
+            ContaBancaria contaOld = repository.getOne(conta.getId());
 
             if (Objects.isNull(contaOld)) {
                 throw new NotFoundException("Conta bancária inexistente");
@@ -46,7 +44,7 @@ public class ContaBancariaService {
             contaOld.setNome(conta.getNome());
             contaOld.setSaldo(conta.getSaldo());
 
-            repContaBancaria.saveAndFlush(contaOld);
+            repository.saveAndFlush(contaOld);
         } catch (NotFoundException e) {
             throw new NotFoundException(e.getMessage());
         } catch (Exception e) {
@@ -59,7 +57,7 @@ public class ContaBancariaService {
     public ContaBancaria getContaBancariaById(Long id) {
         try {
 
-            ContaBancaria conta = repContaBancaria.getOne(id);
+            ContaBancaria conta = repository.getOne(id);
 
             if (Objects.isNull(conta)) {
                 throw new NotFoundException("Conta inexistente");

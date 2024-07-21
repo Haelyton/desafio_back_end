@@ -29,4 +29,6 @@ public class Transferencia {
 
     @JoinColumn(name = "BigDecimal")
     private BigDecimal valor = BigDecimal.ZERO;
+
+
 }

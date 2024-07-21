@@ -7,17 +7,17 @@ import com.maicon_projeto_back.desafio_back_end.repository.RepositoryTransferenc
 import jakarta.ws.rs.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.validation.ValidationException;
+import org.springframework.stereotype.Service;
 
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
-
+@Service
 public class TransferenciaService {
 
     @Autowired
     RepositoryContaBancaria repContaBancaria;
-
 
     @Autowired
     RepositoryTransferencia repTransferencia;
